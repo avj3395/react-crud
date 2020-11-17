@@ -8,26 +8,30 @@ export default function Add() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [update, setUpdate] = useState("false");
-  
-  
+  const [emailstatus, setEmailStatus] = useState("false");
+  const [editkey, setEditKey] = useState("");
 
   const adddata = (e) => {
     e.preventDefault();
-    
+
     if (name === "" && email === "" && message === "") {
       window.alert("fields are empty!!!! ");
-    } else {
-      setDatas([
-        ...datas,
-        {
-          id: datas.length,
-          names: name,
-          emails: email,
-          messages: message,
-        },
-      ]);
+    }  else {
+      insertdata();
+      
     }
+  };
 
+  const insertdata = () => {
+    setDatas([
+      ...datas,
+      {
+        id: datas.length,
+        names: name,
+        emails: email,
+        messages: message,
+      },
+    ]);
     setName("");
     setEmail("");
     setMessage("");
@@ -50,21 +54,44 @@ export default function Add() {
     setDatas([...alldata]);
 
     console.log(datas);
-    
   };
 
   const updateData = (keys) => {
     setUpdate("true");
-    const allitems = datas.filter((data, index) => index === keys);
-    console.log(allitems);
-    
-    
+    const keyid = parseInt(keys.id);
+    console.log(keys);
+    setName(keys.names);
+    setEmail(keys.emails);
+    setMessage(keys.messages);
+    setEditKey(keyid);
+  };
+
+  const Edititems = () => {
+    datas.map((d) => {
+      if (d.id === editkey) {
+        d.names = name;
+        d.emails = email;
+        d.messages = message;
+      }
+    });
+    setDatas([...datas]);
+    setName("");
+    setEmail("");
+    setMessage("");
+    setUpdate("false");
+  };
+
+  const Editcancel = () => {
+    setName("");
+    setEmail("");
+    setMessage("");
+    setUpdate("false");
   };
 
   return (
     <div>
-      <div class="login-page">
-        <div class="form">
+      <div className="login-page">
+        <div className="form">
           <form className="register-form" autoComplete="off" onSubmit={adddata}>
             <input
               type="text"
@@ -84,20 +111,43 @@ export default function Add() {
               value={message}
               onChange={messageChange}
             />
-            <button type="submit">ADD</button>
+            {update === "true" ? (
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => Edititems()}
+                >
+                  Update
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => Editcancel()}
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <button type="submit" className="addbtn">
+                ADD
+              </button>
+            )}
           </form>
         </div>
 
         <div>
           <table className="table-fill">
-            <thead>
-              <tr>
-                <th className="text-left">Name</th>
-                <th className="text-left">Email</th>
-                <th className="text-left">Message</th>
-                <th className="text-left">Action</th>
-              </tr>
-            </thead>
+            {datas.length >= 1 ? (
+              <thead>
+                <tr>
+                  <th className="text-left">Name</th>
+                  <th className="text-left">Email</th>
+                  <th className="text-left">Message</th>
+                  <th className="text-left">Action</th>
+                </tr>
+              </thead>
+            ) : null}
 
             <tbody className="table-hover">
               {datas.map((data) => (
@@ -109,7 +159,7 @@ export default function Add() {
                     <button
                       className="btn btn-outline-primary m-2"
                       variant="outline-primary"
-                      onClick={() => updateData(data.id)}
+                      onClick={() => updateData(data)}
                     >
                       <img
                         alt=""

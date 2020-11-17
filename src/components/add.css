@@ -33,7 +33,7 @@
   box-sizing: border-box;
   font-size: 14px;
 }
-.form button {
+.addbtn {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
@@ -47,7 +47,7 @@
   transition: all 0.3 ease;
   cursor: pointer;
 }
-.form button:hover,.form button:active,.form button:focus {
+.addbtn:hover,.addbtn:active,.addbtn:focus {
   background: #43A047;
 }
 

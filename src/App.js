@@ -1,13 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import Add from './components/Add';
+import Add from "./components/Add";
 
 function App() {
-  return (
-    <div >
-      <Add/>
-    </div>
-  );
+  return <Add />;
 }
 
 export default App;
