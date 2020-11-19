@@ -8,7 +8,6 @@ export default function Add() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [update, setUpdate] = useState("false");
-  const [emailstatus, setEmailStatus] = useState("false");
   const [editkey, setEditKey] = useState("");
 
   const adddata = (e) => {
